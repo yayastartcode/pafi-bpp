@@ -1,0 +1,173 @@
+<div class="max-w-3xl mx-auto">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-6">
+        <div>
+            <h1 class="text-2xl font-bold text-text">Selamat Datang, <span class="text-header">
+                    <%= member.nama %>
+                </span></h1>
+            <p class="text-text-muted text-sm mt-1">Dashboard Anggota PAFI Cabang Balikpapan</p>
+        </div>
+        <a href="/member/logout" class="btn-secondary text-sm"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
+
+    <!-- Status Card -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <div class="card p-5">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-xs text-text-muted uppercase tracking-wide">Status Keanggotaan</p>
+                    <p
+                        class="text-lg font-bold mt-1 <%= member.status_member === 'Aktif' ? 'text-green-600' : (member.status_member === 'Ditolak' ? 'text-red-600' : 'text-yellow-600') %>">
+                        <i
+                            class="fas <%= member.status_member === 'Aktif' ? 'fa-check-circle' : (member.status_member === 'Ditolak' ? 'fa-times-circle' : 'fa-clock') %> mr-1"></i>
+                        <%= member.status_member || 'Pending' %>
+                    </p>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center">
+                    <i class="fas fa-user-check text-header text-xl"></i>
+                </div>
+            </div>
+        </div>
+        <div class="card p-5">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-xs text-text-muted uppercase tracking-wide">Status Iuran</p>
+                    <p
+                        class="text-lg font-bold mt-1 <%= member.iuran_status === 'Lunas' ? 'text-green-600' : 'text-yellow-600' %>">
+                        <i
+                            class="fas <%= member.iuran_status === 'Lunas' ? 'fa-check-double' : 'fa-exclamation-triangle' %> mr-1"></i>
+                        <%= member.iuran_status %>
+                    </p>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center">
+                    <i class="fas fa-money-bill text-header text-xl"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <% if (member.iuran_status !=='Lunas' ) { %>
+        <!-- Informasi Pembayaran -->
+        <div class="card p-6 mb-6 border-l-4 border-l-header">
+            <h2 class="text-lg font-semibold text-text mb-4"><i class="fas fa-university text-header mr-2"></i>Informasi
+                Pembayaran Iuran</h2>
+            <div class="bg-blue-50 rounded-xl p-5 mb-4">
+                <p class="text-sm text-text-muted mb-2">Transfer iuran keanggotaan ke rekening berikut:</p>
+                <div class="space-y-2">
+                    <div class="flex items-center gap-3">
+                        <span class="text-sm text-text-muted w-24">Bank</span>
+                        <span class="font-semibold text-text">BRI</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-sm text-text-muted w-24">No. Rekening</span>
+                        <span class="font-bold text-header text-lg tracking-wider">0123-4567-8901-234</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-sm text-text-muted w-24">Atas Nama</span>
+                        <span class="font-semibold text-text">PAFI Cabang Balikpapan</span>
+                    </div>
+                </div>
+                <div class="mt-4 pt-3 border-t border-blue-200">
+                    <p class="text-sm text-text-muted"><i class="fas fa-info-circle text-header mr-1"></i> Nominal
+                        iuran:</p>
+                    <ul class="text-sm text-text mt-1 space-y-1 pl-5">
+                        <li><strong>Anggota Baru:</strong> Rp. 10.000/bulan × 12 bulan = <strong class="text-header">Rp.
+                                120.000</strong></li>
+                        <li><strong>Anggota Lama:</strong> Rp. 10.000/bulan × 6 bulan = <strong class="text-header">Rp.
+                                60.000</strong></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Upload Bukti Transfer -->
+            <h3 class="text-sm font-semibold text-text mb-3"><i class="fas fa-upload text-header mr-1"></i> Upload Bukti
+                Transfer</h3>
+            <% if (member.bukti_transfer) { %>
+                <div class="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
+                    <p class="text-sm text-green-700 font-medium mb-2"><i class="fas fa-check-circle mr-1"></i> Bukti
+                        transfer telah diupload</p>
+                    <a href="/uploads/<%= member.bukti_transfer %>" target="_blank">
+                        <img src="/uploads/<%= member.bukti_transfer %>"
+                            class="max-w-[200px] rounded-lg border border-green-200" alt="Bukti Transfer">
+                    </a>
+                    <p class="text-xs text-green-600 mt-2">Menunggu verifikasi admin. Anda dapat mengupload ulang jika
+                        diperlukan.</p>
+                </div>
+                <% } %>
+                    <form method="POST" action="/member/upload-bukti" enctype="multipart/form-data"
+                        class="flex items-end gap-3">
+                        <div class="flex-1">
+                            <input type="file" name="bukti_transfer" accept="image/*" required
+                                class="form-input file:mr-4 file:py-1 file:px-3 file:rounded file:border-0 file:text-sm file:bg-blue-50 file:text-header">
+                            <p class="text-xs text-text-muted mt-1">Screenshot / foto bukti transfer (JPG, PNG). Maks
+                                5MB</p>
+                        </div>
+                        <button type="submit" class="btn-primary flex-shrink-0"><i class="fas fa-upload"></i>
+                            Upload</button>
+                    </form>
+        </div>
+        <% } else { %>
+            <div class="card p-6 mb-6 bg-green-50 border border-green-200">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-check-double text-green-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-green-700">Iuran Anda Sudah Lunas</h3>
+                        <p class="text-sm text-green-600">Terima kasih atas kontribusi Anda untuk organisasi PAFI Cabang
+                            Balikpapan.</p>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+
+                <!-- Data Keanggotaan -->
+                <div class="card p-6">
+                    <h2 class="text-lg font-semibold text-text mb-4"><i class="fas fa-id-card text-header mr-2"></i>Data
+                        Keanggotaan Anda</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                        <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                            <i class="fas fa-user text-header w-5 text-center"></i>
+                            <div><span class="text-text-muted block text-xs">Nama</span><span
+                                    class="font-medium text-text">
+                                    <%= member.nama %>
+                                </span></div>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                            <i class="fas fa-barcode text-header w-5 text-center"></i>
+                            <div><span class="text-text-muted block text-xs">No. KTAN</span><span
+                                    class="font-medium text-text">
+                                    <%= member.no_ktan || '-' %>
+                                </span></div>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                            <i class="fas fa-building text-header w-5 text-center"></i>
+                            <div><span class="text-text-muted block text-xs">Tempat Bekerja</span><span
+                                    class="font-medium text-text">
+                                    <%= member.tempat_bekerja || '-' %>
+                                </span></div>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                            <i class="fas fa-credit-card text-header w-5 text-center"></i>
+                            <div><span class="text-text-muted block text-xs">Jenis Kartu</span><span
+                                    class="font-medium text-text">
+                                    <%= member.jenis_kartu || '-' %>
+                                </span></div>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                            <i class="fas fa-tint text-red-500 w-5 text-center"></i>
+                            <div><span class="text-text-muted block text-xs">Golongan Darah</span><span
+                                    class="font-medium text-text">
+                                    <%= member.golongan_darah || '-' %>
+                                </span></div>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                            <i class="fab fa-whatsapp text-green-600 w-5 text-center"></i>
+                            <div><span class="text-text-muted block text-xs">WhatsApp</span><span
+                                    class="font-medium text-text">
+                                    <%= member.no_whatsapp || '-' %>
+                                </span></div>
+                        </div>
+                    </div>
+                </div>
+</div>

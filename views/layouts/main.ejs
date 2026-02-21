@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="PAFI Cabang Balikpapan - Persatuan Ahli Farmasi Indonesia">
+  <title>
+    <%= title %>
+  </title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/output.css">
+</head>
+
+<body class="bg-page-bg text-text font-sans min-h-screen flex flex-col">
+  <!-- Flash Messages -->
+  <% if (success && success.length> 0) { %>
+    <div class="flash-success mx-4 mt-4 flex items-center gap-2">
+      <i class="fas fa-check-circle"></i>
+      <%= success %>
+    </div>
+    <% } %>
+      <% if (error && error.length> 0) { %>
+        <div class="flash-error mx-4 mt-4 flex items-center gap-2">
+          <i class="fas fa-exclamation-circle"></i>
+          <%= error %>
+        </div>
+        <% } %>
+
+          <!-- Header -->
+          <nav class="bg-header sticky top-0 z-50 shadow-md">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div class="flex items-center justify-between py-2">
+                <a href="/" class="flex items-center gap-3">
+                  <% if (siteLogo) { %>
+                    <img src="/uploads/<%= siteLogo %>" class="h-16 sm:h-20 w-auto object-contain"
+                      alt="<%= siteName %>">
+                    <% } else { %>
+                      <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                        <i class="fas fa-mortar-pestle text-white text-lg"></i>
+                      </div>
+                      <% } %>
+                        <div>
+                          <span class="text-lg font-bold text-white">
+                            <%= siteName %>
+                          </span>
+                        </div>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center gap-6">
+                  <!-- Beranda -->
+                  <a href="/" class="text-white/90 hover:text-white transition-colors text-sm font-medium">Beranda</a>
+
+                  <!-- Tentang Kami (Dropdown) -->
+                  <div class="relative group">
+                    <button
+                      class="text-white/90 group-hover:text-white transition-colors text-sm font-medium flex items-center gap-1">
+                      Tentang Kami <i class="fas fa-chevron-down text-xs"></i>
+                    </button>
+                    <div class="absolute pt-4 hidden group-hover:block z-50 min-w-[200px]">
+                      <div class="bg-white rounded-lg shadow-xl border border-gray-100 overflow-hidden py-1">
+                        <a href="/profil"
+                          class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-header transition">Profil
+                          & Visi Misi</a>
+                        <a href="/struktur-organisasi"
+                          class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-header transition">Struktur
+                          Organisasi</a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Informasi (Dropdown) -->
+                  <div class="relative group">
+                    <button
+                      class="text-white/90 group-hover:text-white transition-colors text-sm font-medium flex items-center gap-1">
+                      Informasi <i class="fas fa-chevron-down text-xs"></i>
+                    </button>
+                    <div class="absolute pt-4 hidden group-hover:block z-50 min-w-[200px]">
+                      <div class="bg-white rounded-lg shadow-xl border border-gray-100 overflow-hidden py-1">
+                        <a href="/berita"
+                          class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-header transition">Berita</a>
+                        <a href="/kegiatan"
+                          class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-header transition">Kegiatan</a>
+                        <a href="/loker"
+                          class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-header transition">Lowongan
+                          Kerja</a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Anggota (Dropdown) -->
+                  <div class="relative group">
+                    <button
+                      class="text-white/90 group-hover:text-white transition-colors text-sm font-medium flex items-center gap-1">
+                      Anggota <i class="fas fa-chevron-down text-xs"></i>
+                    </button>
+                    <div class="absolute pt-4 hidden group-hover:block z-50 min-w-[200px]">
+                      <div class="bg-white rounded-lg shadow-xl border border-gray-100 overflow-hidden py-1">
+                        <a href="/daftar"
+                          class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-header transition">Pendaftaran
+                          Anggota</a>
+                        <% if (member) { %>
+                          <a href="/member/dashboard"
+                            class="block px-4 py-2 text-sm text-header font-medium hover:bg-blue-50 transition"><i
+                              class="fas fa-user-circle mr-1"></i> Area Anggota (Dashboard)</a>
+                          <% } else { %>
+                            <a href="/member/login"
+                              class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-header transition"><i
+                                class="fas fa-sign-in-alt mr-1"></i> Login Anggota</a>
+                            <% } %>
+                      </div>
+                    </div>
+                  </div>
+
+                  <% if (user) { %>
+                    <a href="/admin/dashboard"
+                      class="ml-2 bg-white text-header font-semibold text-sm py-2 px-4 rounded-lg hover:bg-white/90 transition">Admin</a>
+                    <% } %>
+                </div>
+
+                <!-- Mobile Toggle -->
+                <button onclick="document.getElementById('mobileMenu').classList.toggle('hidden')"
+                  class="md:hidden text-white">
+                  <i class="fas fa-bars text-xl"></i>
+                </button>
+              </div>
+              <!-- Mobile Menu -->
+              <div id="mobileMenu" class="hidden md:hidden pb-4 space-y-1 mt-3">
+                <a href="/"
+                  class="block py-2 px-3 text-white/90 hover:text-white hover:bg-white/10 rounded font-medium">Beranda</a>
+
+                <div class="py-2 px-3">
+                  <span class="text-blue-200 text-xs font-bold uppercase tracking-wider mb-2 block">Tentang Kami</span>
+                  <a href="/profil"
+                    class="block py-1.5 pl-4 text-white/80 hover:text-white hover:bg-white/10 rounded text-sm mb-1">Profil
+                    & Visi Misi</a>
+                  <a href="/struktur-organisasi"
+                    class="block py-1.5 pl-4 text-white/80 hover:text-white hover:bg-white/10 rounded text-sm">Struktur
+                    Organisasi</a>
+                </div>
+
+                <div class="py-2 px-3">
+                  <span class="text-blue-200 text-xs font-bold uppercase tracking-wider mb-2 block">Informasi</span>
+                  <a href="/berita"
+                    class="block py-1.5 pl-4 text-white/80 hover:text-white hover:bg-white/10 rounded text-sm mb-1">Berita</a>
+                  <a href="/kegiatan"
+                    class="block py-1.5 pl-4 text-white/80 hover:text-white hover:bg-white/10 rounded text-sm mb-1">Kegiatan</a>
+                  <a href="/loker"
+                    class="block py-1.5 pl-4 text-white/80 hover:text-white hover:bg-white/10 rounded text-sm">Lowongan
+                    Kerja</a>
+                </div>
+
+                <div class="py-2 px-3">
+                  <span class="text-blue-200 text-xs font-bold uppercase tracking-wider mb-2 block">Anggota</span>
+                  <a href="/daftar"
+                    class="block py-1.5 pl-4 text-white/80 hover:text-white hover:bg-white/10 rounded text-sm mb-1">Pendaftaran
+                    Anggota</a>
+                  <% if (member) { %>
+                    <a href="/member/dashboard"
+                      class="block py-1.5 pl-4 text-white hover:bg-white/10 rounded text-sm font-medium"><i
+                        class="fas fa-user-circle mr-1"></i> Area Anggota</a>
+                    <% } else { %>
+                      <a href="/member/login"
+                        class="block py-1.5 pl-4 text-white hover:bg-white/10 rounded text-sm font-medium"><i
+                          class="fas fa-sign-in-alt mr-1"></i> Login Anggota</a>
+                      <% } %>
+                </div>
+
+                <% if (user) { %>
+                  <a href="/admin/dashboard"
+                    class="block mt-4 py-2 px-3 text-white font-medium bg-white/10 rounded text-center">Admin
+                    Dashboard</a>
+                  <% } %>
+              </div>
+            </div>
+          </nav>
+
+          <!-- Content -->
+          <main class="flex-1">
+            <%- body %>
+          </main>
+
+          <!-- Footer -->
+          <footer class="bg-white border-t border-border mt-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                  <div class="flex items-center gap-3 mb-4">
+                    <% if (siteLogo) { %>
+                      <img src="/uploads/<%= siteLogo %>" class="h-16 w-auto object-contain" alt="<%= siteName %>">
+                      <% } else { %>
+                        <div class="w-10 h-10 rounded-full bg-header flex items-center justify-center">
+                          <i class="fas fa-mortar-pestle text-white"></i>
+                        </div>
+                        <% } %>
+                          <span class="text-xl font-bold text-header">
+                            <%= siteName %>
+                          </span>
+                  </div>
+                  <p class="text-text-muted text-sm leading-relaxed">
+                    <%= siteName %>
+                  </p>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-text mb-4">Hubungi Kami</h4>
+                  <div class="space-y-2 text-sm text-text-muted">
+                    <p><i class="fas fa-map-marker-alt text-header mr-2"></i> Balikpapan, Kalimantan Timur</p>
+                    <p><i class="fab fa-whatsapp text-green-600 mr-2"></i> Hubungi via WhatsApp</p>
+                    <p><i class="fas fa-envelope text-header mr-2"></i> pafi.balikpapan@gmail.com</p>
+                  </div>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-text mb-4">Tautan</h4>
+                  <div class="space-y-2 text-sm">
+                    <a href="/daftar" class="block text-text-muted hover:text-header transition-colors">Pendaftaran
+                      Anggota</a>
+                    <a href="/berita" class="block text-text-muted hover:text-header transition-colors">Berita &
+                      Info</a>
+                    <a href="/kegiatan" class="block text-text-muted hover:text-header transition-colors">Kegiatan</a>
+                    <a href="/login" class="block text-text-muted hover:text-header transition-colors">Login Admin</a>
+                  </div>
+                </div>
+              </div>
+              <div class="border-t border-border mt-8 pt-8 text-center text-text-muted text-sm">
+                &copy; <%= new Date().getFullYear() %>
+                  <%= siteName %>. All rights reserved.
+              </div>
+            </div>
+          </footer>
+</body>
+
+</html>

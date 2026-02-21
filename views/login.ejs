@@ -1,0 +1,39 @@
+<div class="card p-8 text-center">
+    <% if (siteLogo) { %>
+        <img src="/uploads/<%= siteLogo %>" class="h-24 mx-auto mb-4 object-contain" alt="<%= siteName %>">
+        <% } else { %>
+            <div class="w-16 h-16 rounded-full bg-header flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-mortar-pestle text-white text-2xl"></i>
+            </div>
+            <% } %>
+                <h1 class="text-2xl font-bold text-header mb-1">
+                    <%= siteName %>
+                </h1>
+                <p class="text-text-muted text-sm mb-8">Login Admin Panel</p>
+
+                <% if (typeof error !=='undefined' && error && error.length> 0) { %>
+                    <div class="flash-error mb-4 text-sm flex items-center gap-2"><i
+                            class="fas fa-exclamation-circle"></i>
+                        <%= error %>
+                    </div>
+                    <% } %>
+
+                        <form method="POST" action="/login" class="space-y-5 text-left">
+                            <div>
+                                <label class="block text-sm font-medium text-text mb-2">Username</label>
+                                <input type="text" name="username" class="form-input" placeholder="Masukkan username"
+                                    required autofocus>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-text mb-2">Password</label>
+                                <input type="password" name="password" class="form-input"
+                                    placeholder="Masukkan password" required>
+                            </div>
+                            <button type="submit" class="btn-primary w-full justify-center py-3"><i
+                                    class="fas fa-sign-in-alt"></i>
+                                Masuk</button>
+                        </form>
+                        <a href="/"
+                            class="inline-flex items-center gap-1 mt-6 text-sm text-text-muted hover:text-header transition-colors"><i
+                                class="fas fa-arrow-left"></i> Kembali ke Beranda</a>
+</div>

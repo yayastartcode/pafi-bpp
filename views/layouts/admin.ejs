@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= title %>
+    </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/css/output.css">
+    <script src="https://cdn.tiny.cloud/1/cepe9kjdj5qkaiqcxdhcjnytstjm3fa4zheftel4q1pxpd7c/tinymce/6/tinymce.min.js"
+        referrerpolicy="origin"></script>
+</head>
+
+<body class="bg-page-bg text-text font-sans min-h-screen flex">
+    <!-- Sidebar -->
+    <aside
+        class="w-64 bg-white min-h-screen fixed left-0 top-0 bottom-0 border-r border-border z-40 hidden lg:flex lg:flex-col"
+        id="sidebar">
+        <!-- Sidebar Header (fixed) -->
+        <div class="p-5 border-b border-border flex-shrink-0">
+            <a href="/admin/dashboard" class="flex items-center gap-3">
+                <% if (siteLogo) { %>
+                    <img src="/uploads/<%= siteLogo %>" class="h-12 w-auto object-contain flex-shrink-0"
+                        alt="<%= siteName %>">
+                    <% } else { %>
+                        <div class="w-10 h-10 rounded-full bg-header flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-mortar-pestle text-white"></i>
+                        </div>
+                        <% } %>
+                            <div class="overflow-hidden">
+                                <span class="font-bold text-header truncate block">
+                                    <%= siteName %>
+                                </span>
+                                <span class="text-xs text-text-muted block">Admin Panel</span>
+                            </div>
+            </a>
+        </div>
+
+        <!-- Sidebar Nav (scrollable) -->
+        <nav class="flex-1 overflow-y-auto p-4 space-y-1">
+            <p class="text-xs font-semibold text-text-muted uppercase tracking-wider mb-2 px-3">Anggota</p>
+            <a href="/admin/dashboard"
+                class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-text-muted">
+                <i class="fas fa-th-large w-5 text-center"></i> Dashboard
+            </a>
+            <a href="/admin/filter/kategori"
+                class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-text-muted">
+                <i class="fas fa-briefcase w-5 text-center"></i> Filter Kategori
+            </a>
+            <a href="/admin/filter/iuran"
+                class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-text-muted">
+                <i class="fas fa-money-bill w-5 text-center"></i> Filter Iuran
+            </a>
+            <a href="/admin/filter/sip"
+                class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-text-muted">
+                <i class="fas fa-id-card w-5 text-center"></i> Filter SIP
+            </a>
+            <a href="/admin/filter/kampus"
+                class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-text-muted">
+                <i class="fas fa-graduation-cap w-5 text-center"></i> Filter Kampus
+            </a>
+
+            <p class="text-xs font-semibold text-text-muted uppercase tracking-wider mt-6 mb-2 px-3">Kegiatan</p>
+            <a href="/admin/kegiatan-realisasi"
+                class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-text-muted">
+                <i class="fas fa-calendar-check w-5 text-center"></i> Kegiatan Realisasi
+            </a>
+            <a href="/admin/info-kegiatan"
+                class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-text-muted">
+                <i class="fas fa-bullhorn w-5 text-center"></i> Info Kegiatan
+            </a>
+            <a href="/admin/pendaftaran-kegiatan"
+                class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-text-muted">
+                <i class="fas fa-clipboard-list w-5 text-center"></i> Pendaftaran
+            </a>
+
+            <p class="text-xs font-semibold text-text-muted uppercase tracking-wider mt-6 mb-2 px-3">Berita & Info</p>
+            <a href="/admin/berita"
+                class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-text-muted">
+                <i class="fas fa-newspaper w-5 text-center"></i> Berita Lainnya
+            </a>
+            <a href="/admin/berita-kefarmasian"
+                class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-text-muted">
+                <i class="fas fa-pills w-5 text-center"></i> Berita Kefarmasian
+            </a>
+            <a href="/admin/lowongan"
+                class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-text-muted">
+                <i class="fas fa-suitcase w-5 text-center"></i> Lowongan Kerja
+            </a>
+            <a href="/admin/skp"
+                class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-text-muted">
+                <i class="fas fa-file-alt w-5 text-center"></i> Tata Cara SKP
+            </a>
+
+            <p class="text-xs font-semibold text-text-muted uppercase tracking-wider mt-6 mb-2 px-3">Organisasi</p>
+            <a href="/admin/persuratan"
+                class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-text-muted">
+                <i class="fas fa-envelope-open-text w-5 text-center"></i> Persuratan
+            </a>
+            <a href="/admin/mutasi"
+                class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-text-muted">
+                <i class="fas fa-exchange-alt w-5 text-center"></i> Mutasi Anggota
+            </a>
+            <a href="/admin/rekomendasi"
+                class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-text-muted">
+                <i class="fas fa-file-signature w-5 text-center"></i> Surat Rekomendasi
+            </a>
+
+            <p class="text-xs font-semibold text-text-muted uppercase tracking-wider mt-6 mb-2 px-3">Sistem</p>
+            <a href="/admin/settings"
+                class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-text-muted">
+                <i class="fas fa-cog w-5 text-center"></i> Pengaturan Situs
+            </a>
+        </nav>
+
+        <!-- Sidebar Footer (fixed at bottom) -->
+        <div class="border-t border-border p-4 flex-shrink-0 space-y-1">
+            <a href="/" class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-text-muted">
+                <i class="fas fa-home w-5 text-center"></i> Ke Website
+            </a>
+            <a href="/logout"
+                class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-red-500 hover:text-red-600">
+                <i class="fas fa-sign-out-alt w-5 text-center"></i> Logout
+            </a>
+        </div>
+    </aside>
+
+    <!-- Mobile sidebar overlay -->
+    <div id="sidebarOverlay" class="fixed inset-0 bg-black/30 z-30 hidden lg:hidden" onclick="closeSidebar()"></div>
+
+    <!-- Main Content -->
+    <div class="flex-1 lg:ml-64">
+        <!-- Top bar -->
+        <header
+            class="bg-white border-b border-border sticky top-0 z-20 px-4 sm:px-6 py-3 flex items-center justify-between">
+            <button onclick="toggleSidebar()" class="lg:hidden text-text-muted hover:text-text">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+            <div class="flex items-center gap-3 ml-auto">
+                <div class="w-8 h-8 rounded-full bg-header flex items-center justify-center">
+                    <i class="fas fa-user text-white text-xs"></i>
+                </div>
+                <span class="text-sm text-text">
+                    <%= user ? user.username : 'Admin' %>
+                </span>
+            </div>
+        </header>
+
+        <!-- Flash Messages -->
+        <div class="px-4 sm:px-6">
+            <% if (typeof success !=='undefined' && success && success.length> 0) { %>
+                <div class="flash-success mt-4 flex items-center gap-2">
+                    <i class="fas fa-check-circle"></i>
+                    <%= success %>
+                </div>
+                <% } %>
+                    <% if (typeof error !=='undefined' && error && error.length> 0) { %>
+                        <div class="flash-error mt-4 flex items-center gap-2">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <%= error %>
+                        </div>
+                        <% } %>
+        </div>
+
+        <!-- Content -->
+        <main class="p-4 sm:p-6">
+            <%- body %>
+        </main>
+    </div>
+
+    <script>
+        // TinyMCE
+        if (document.querySelector('textarea.richtext')) {
+            tinymce.init({
+                selector: 'textarea.richtext',
+                height: 400,
+                menubar: false,
+                plugins: 'lists link image table code',
+                toolbar: 'undo redo | bold italic underline | bullist numlist | link image table | code'
+            });
+        }
+        // Active sidebar
+        document.querySelectorAll('.sidebar-link').forEach(link => {
+            if (link.href === window.location.href) link.classList.add('active');
+        });
+        // Mobile sidebar toggle
+        function toggleSidebar() {
+            const s = document.getElementById('sidebar');
+            const o = document.getElementById('sidebarOverlay');
+            s.classList.toggle('hidden');
+            s.classList.toggle('lg:flex');
+            o.classList.toggle('hidden');
+        }
+        function closeSidebar() {
+            const s = document.getElementById('sidebar');
+            const o = document.getElementById('sidebarOverlay');
+            s.classList.add('hidden');
+            o.classList.add('hidden');
+        }
+    </script>
+</body>
+
+</html>

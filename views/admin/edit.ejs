@@ -1,0 +1,139 @@
+<div class="max-w-3xl mx-auto">
+    <a href="/admin/dashboard" class="text-text-muted hover:text-header text-sm mb-6 inline-flex items-center gap-1">
+        <i class="fas fa-arrow-left"></i> Kembali
+    </a>
+
+    <h2 class="text-2xl font-bold mb-6">Edit <span class="text-header">Anggota</span></h2>
+
+    <form method="POST" action="/admin/members/<%= member.id %>/edit" class="card rounded-2xl p-8 space-y-5">
+        <div>
+            <label class="block text-sm font-medium text-text mb-2">Nama Anggota</label>
+            <input type="text" name="nama" class="form-input" value="<%= member.nama %>" required>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <label class="block text-sm font-medium text-text mb-2">Tempat Lahir</label>
+                <input type="text" name="tempat_lahir" class="form-input" value="<%= member.tempat_lahir || '' %>">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-text mb-2">Tanggal Lahir</label>
+                <input type="date" name="tanggal_lahir" class="form-input"
+                    value="<%= member.tanggal_lahir ? new Date(member.tanggal_lahir).toISOString().split('T')[0] : '' %>">
+            </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <label class="block text-sm font-medium text-text mb-2">Tempat Bekerja</label>
+                <input type="text" name="tempat_bekerja" class="form-input" value="<%= member.tempat_bekerja || '' %>">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-text mb-2">Kategori Tempat Bekerja</label>
+                <select name="kategori_tempat_bekerja" class="form-input">
+                    <% ['Apotek','Rumah Sakit','Puskesmas','Klinik','Industri Farmasi','PBF','Instansi
+                        Pemerintah','Lainnya'].forEach(function(k) { %>
+                        <option value="<%= k %>" <%=member.kategori_tempat_bekerja===k ? 'selected' : '' %>><%= k %>
+                        </option>
+                        <% }); %>
+                </select>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <label class="block text-sm font-medium text-text mb-2">Kampus</label>
+                <input type="text" name="kampus" class="form-input" value="<%= member.kampus || '' %>">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-text mb-2">Provinsi Kampus</label>
+                <select name="provinsi_kampus" class="form-input">
+                    <option value="">-- Pilih Provinsi --</option>
+                    <% ['ACEH','SUMATERA UTARA','SUMATERA BARAT','RIAU','JAMBI','SUMATERA
+                        SELATAN','BENGKULU','LAMPUNG','KEPULAUAN BANGKA BELITUNG','KEPULAUAN RIAU','DKI JAKARTA','JAWA
+                        BARAT','JAWA TENGAH','DI YOGYAKARTA','JAWA TIMUR','BANTEN','BALI','NUSA TENGGARA BARAT','NUSA
+                        TENGGARA TIMUR','KALIMANTAN BARAT','KALIMANTAN TENGAH','KALIMANTAN SELATAN','KALIMANTAN
+                        TIMUR','KALIMANTAN UTARA','SULAWESI UTARA','SULAWESI TENGAH','SULAWESI SELATAN','SULAWESI
+                        TENGGARA','GORONTALO','SULAWESI BARAT','MALUKU','MALUKU UTARA','PAPUA
+                        BARAT','PAPUA'].forEach(function(p) { %>
+                        <option value="<%= p %>" <%=member.provinsi_kampus===p ? 'selected' : '' %>><%= p %>
+                        </option>
+                        <% }); %>
+                </select>
+            </div>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-text mb-2">Ijazah Kefarmasian</label>
+            <select name="ijazah_kefarmasian" class="form-input">
+                <% ['SMF/SAA','D3 Farmasi','S1 Farmasi','Profesi Apoteker'].forEach(function(k) { %>
+                    <option value="<%= k %>" <%=member.ijazah_kefarmasian===k ? 'selected' : '' %>><%= k %>
+                    </option>
+                    <% }); %>
+            </select>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+                <label class="block text-sm font-medium text-text mb-2">No. STR</label>
+                <input type="text" name="no_str" class="form-input" value="<%= member.no_str || '' %>">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-text mb-2">No. SIP</label>
+                <input type="text" name="no_sip" class="form-input" value="<%= member.no_sip || '' %>">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-text mb-2">Masa Aktif SIP</label>
+                <input type="date" name="masa_aktif_sip" class="form-input"
+                    value="<%= member.masa_aktif_sip ? new Date(member.masa_aktif_sip).toISOString().split('T')[0] : '' %>">
+            </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <label class="block text-sm font-medium text-text mb-2">No. KTAN</label>
+                <input type="text" name="no_ktan" class="form-input" value="<%= member.no_ktan || '' %>">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-text mb-2">No. WhatsApp</label>
+                <input type="text" name="no_whatsapp" class="form-input" value="<%= member.no_whatsapp || '' %>">
+            </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <label class="block text-sm font-medium text-text mb-2">Jenis Kartu</label>
+                <select name="jenis_kartu" class="form-input">
+                    <option value="KTA Baru" <%=member.jenis_kartu==='KTA Baru' ? 'selected' : '' %>>KTA Baru</option>
+                    <option value="Perpanjangan KTA" <%=member.jenis_kartu==='Perpanjangan KTA' ? 'selected' : '' %>
+                        >Perpanjangan KTA</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-text mb-2">Golongan Darah</label>
+                <select name="golongan_darah" class="form-input">
+                    <option value="">-- Pilih --</option>
+                    <% ['A','B','AB','O'].forEach(function(g) { %>
+                        <option value="<%= g %>" <%=member.golongan_darah===g ? 'selected' : '' %>><%= g %>
+                        </option>
+                        <% }); %>
+                </select>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <label class="block text-sm font-medium text-text mb-2">Status Iuran</label>
+                <select name="iuran_status" class="form-input">
+                    <option value="Lunas" <%=member.iuran_status==='Lunas' ? 'selected' : '' %>>Lunas</option>
+                    <option value="Belum Lunas" <%=member.iuran_status==='Belum Lunas' ? 'selected' : '' %>>Belum Lunas
+                    </option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-text mb-2">Status Pendaftaran</label>
+                <select name="status_member" class="form-input">
+                    <option value="Pending" <%=member.status_member==='Pending' ? 'selected' : '' %>>Pending</option>
+                    <option value="Aktif" <%=member.status_member==='Aktif' ? 'selected' : '' %>>Aktif (Diterima)
+                    </option>
+                    <option value="Ditolak" <%=member.status_member==='Ditolak' ? 'selected' : '' %>>Ditolak</option>
+                </select>
+            </div>
+        </div>
+        <button type="submit" class="btn-primary w-full justify-center py-3">
+            <i class="fas fa-save"></i> Simpan Perubahan
+        </button>
+    </form>
+</div>

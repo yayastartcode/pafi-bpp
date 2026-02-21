@@ -1,0 +1,179 @@
+<h2 class="text-2xl font-bold mb-6">Pengaturan <span class="text-header">Situs</span></h2>
+
+<form method="POST" action="/admin/settings" enctype="multipart/form-data" class="space-y-8">
+
+    <!-- Identitas Situs -->
+    <div class="card p-6">
+        <h3 class="font-semibold text-text mb-4 flex items-center gap-2"><i class="fas fa-globe text-header"></i>
+            Identitas Situs</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <label class="block text-sm font-medium text-text mb-2">Nama Situs</label>
+                <input type="text" name="site_name" class="form-input" value="<%= settings.site_name || '' %>">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-text mb-2">Tagline</label>
+                <input type="text" name="site_tagline" class="form-input" value="<%= settings.site_tagline || '' %>">
+            </div>
+        </div>
+        <div class="mt-4">
+            <label class="block text-sm font-medium text-text mb-2">Logo</label>
+            <div class="flex items-center gap-4">
+                <% if (settings.logo) { %>
+                    <img src="/uploads/<%= settings.logo %>" class="h-12 rounded" alt="Logo">
+                    <% } else { %>
+                        <div class="h-12 w-12 rounded bg-blue-50 flex items-center justify-center"><i
+                                class="fas fa-image text-text-muted"></i></div>
+                        <% } %>
+                            <input type="file" name="logo_file" accept="image/*"
+                                class="form-input flex-1 file:mr-4 file:py-1 file:px-3 file:rounded file:border-0 file:text-sm file:bg-blue-50 file:text-header">
+            </div>
+            <p class="text-xs text-text-muted mt-1">Format: PNG, JPG. Rekomendasi ukuran: 200x60px</p>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="card p-6">
+        <h3 class="font-semibold text-text mb-4 flex items-center gap-2"><i class="fas fa-image text-header"></i> Hero
+            Section</h3>
+        <div class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium text-text mb-2">Background Hero</label>
+                <div class="flex items-center gap-4">
+                    <% if (settings.hero_bg) { %>
+                        <img src="/uploads/<%= settings.hero_bg %>" class="h-16 w-28 rounded object-cover"
+                            alt="Hero BG">
+                        <% } else { %>
+                            <div class="h-16 w-28 rounded bg-blue-50 flex items-center justify-center"><i
+                                    class="fas fa-image text-text-muted"></i></div>
+                            <% } %>
+                                <input type="file" name="hero_bg_file" accept="image/*"
+                                    class="form-input flex-1 file:mr-4 file:py-1 file:px-3 file:rounded file:border-0 file:text-sm file:bg-blue-50 file:text-header">
+                </div>
+                <p class="text-xs text-text-muted mt-1">Rekomendasi: 1920x600px. Kosongkan untuk menggunakan warna biru
+                    solid.</p>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-text mb-2">Judul Hero</label>
+                <input type="text" name="hero_title" class="form-input" value="<%= settings.hero_title || '' %>">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-text mb-2">Deskripsi Hero</label>
+                <textarea name="hero_subtitle" class="form-input"
+                    rows="3"><%= settings.hero_subtitle || '' %></textarea>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-text mb-2">Teks Tombol CTA</label>
+                    <input type="text" name="hero_btn_text" class="form-input"
+                        value="<%= settings.hero_btn_text || '' %>">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-text mb-2">Link Tombol CTA</label>
+                    <input type="text" name="hero_btn_link" class="form-input"
+                        value="<%= settings.hero_btn_link || '' %>" placeholder="/daftar">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profil Khusus & Visi Misi -->
+    <div class="card p-6">
+        <h3 class="font-semibold text-text mb-4 flex items-center gap-2"><i class="fas fa-bullseye text-header"></i>
+            Profil, Visi, & Misi</h3>
+        <div class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium text-text mb-2">Teks Profil Lengkap</label>
+                <textarea name="profil_text" class="form-input" rows="8"
+                    placeholder="Tuliskan profil organisasi di sini (bisa menggunakan tag HTML dasar seperti <p>, <b>, <ul>, dll)"><%= settings.profil_text || '' %></textarea>
+                <p class="text-xs text-text-muted mt-1">Anda dapat menggunakan tag HTML dasar (contoh: &lt;br&gt; untuk
+                    enter, &lt;strong&gt; untuk tebal).</p>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-text mb-2">Visi</label>
+                <textarea name="visi" class="form-input" rows="3"><%= settings.visi || '' %></textarea>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-text mb-2">Misi</label>
+                <textarea name="misi" class="form-input" rows="4"><%= settings.misi || '' %></textarea>
+                <p class="text-xs text-text-muted mt-1">Pisahkan setiap poin misi dengan tanda <code
+                        class="bg-gray-100 px-1 rounded">|</code> (contoh: Poin 1|Poin 2|Poin 3)</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Struktur Organisasi -->
+    <div class="card p-6">
+        <h3 class="font-semibold text-text mb-4 flex items-center gap-2"><i class="fas fa-sitemap text-header"></i>
+            Struktur Organisasi</h3>
+        <div class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium text-text mb-2">Bagan Struktur Organisasi (Gambar)</label>
+                <div class="flex items-center gap-4">
+                    <% if (settings.struktur_org_img) { %>
+                        <img src="/uploads/<%= settings.struktur_org_img %>"
+                            class="h-16 rounded object-cover border border-border" alt="Struktur Org">
+                        <% } else { %>
+                            <div class="h-16 w-16 rounded bg-blue-50 flex items-center justify-center"><i
+                                    class="fas fa-image text-text-muted"></i></div>
+                            <% } %>
+                                <input type="file" name="struktur_org_img_file" accept="image/*"
+                                    class="form-input flex-1 file:mr-4 file:py-1 file:px-3 file:rounded file:border-0 file:text-sm file:bg-blue-50 file:text-header">
+                </div>
+                <p class="text-xs text-text-muted mt-1">Rekomendasi: Gambar ukuran vertikal/horizontal (PNG/JPG). Upload
+                    gambar baru untuk menggantikan gambar sebelumnya.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kontak & Sosial Media -->
+    <div class="card p-6">
+        <h3 class="font-semibold text-text mb-4 flex items-center gap-2"><i class="fas fa-address-book text-header"></i>
+            Informasi Kontak & Sosial Media</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="md:col-span-2">
+                <label class="block text-sm font-medium text-text mb-2">Sekretariat PAFI (Alamat/Teks)</label>
+                <input type="text" name="contact_address" class="form-input"
+                    value="<%= settings.contact_address || '' %>" placeholder="Contoh: Gedung A, Jl. Sudirman No 1">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-text mb-2">No. WhatsApp</label>
+                <input type="text" name="contact_whatsapp" class="form-input"
+                    value="<%= settings.contact_whatsapp || '0811484010' %>"
+                    placeholder="Contoh: 0811... (untuk link direct WA)">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-text mb-2">Website Resmi PAFI</label>
+                <input type="text" name="contact_website" class="form-input"
+                    value="<%= settings.contact_website || '' %>" placeholder="https://pafi-balikpapan.org">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-text mb-2">PAFI On Facebook</label>
+                <input type="text" name="contact_facebook" class="form-input"
+                    value="<%= settings.contact_facebook || '' %>" placeholder="Link atau Nama Akun Facebook">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-text mb-2">PAFI On Instagram</label>
+                <input type="text" name="contact_instagram" class="form-input"
+                    value="<%= settings.contact_instagram || '' %>" placeholder="Link atau Username Instagram">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-text mb-2">PAFI On Youtube</label>
+                <input type="text" name="contact_youtube" class="form-input"
+                    value="<%= settings.contact_youtube || '' %>" placeholder="Link Channel Youtube">
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="card p-6">
+        <h3 class="font-semibold text-text mb-4 flex items-center gap-2"><i
+                class="fas fa-window-minimize text-header"></i> Footer</h3>
+        <div>
+            <label class="block text-sm font-medium text-text mb-2">Teks Footer</label>
+            <textarea name="footer_text" class="form-input" rows="2"><%= settings.footer_text || '' %></textarea>
+        </div>
+    </div>
+
+    <button type="submit" class="btn-primary py-3 px-8"><i class="fas fa-save"></i> Simpan Pengaturan</button>
+</form>

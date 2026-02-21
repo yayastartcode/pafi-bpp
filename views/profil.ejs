@@ -1,0 +1,62 @@
+<section class="bg-header py-16 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl font-bold mb-4">Profil <span class="text-blue-200">Organisasi</span></h1>
+        <p class="text-blue-100 text-lg">Mengenal lebih dekat PAFI Cabang Balikpapan</p>
+    </div>
+</section>
+
+<!-- Profil & Sejarah -->
+<section class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="card p-8 lg:p-12 mb-12">
+            <div class="flex items-center gap-3 mb-6 border-b border-border pb-4">
+                <i class="fas fa-building text-header text-3xl"></i>
+                <h2 class="text-3xl font-bold text-text">Profil <span class="text-header">Lengkap</span></h2>
+            </div>
+
+            <div class="prose prose-blue max-w-none text-text-muted leading-relaxed">
+                <% if (settings.profil_text) { %>
+                    <%- settings.profil_text %>
+                        <% } else { %>
+                            <p class="text-center italic">Profil belum ditambahkan oleh administrator.</p>
+                            <% } %>
+            </div>
+        </div>
+
+        <!-- Visi & Misi -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="card p-8 bg-blue-50 border-blue-100">
+                <div
+                    class="w-14 h-14 rounded-xl bg-header flex items-center justify-center mb-6 shadow-lg shadow-blue-200">
+                    <i class="fas fa-eye text-white text-2xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-text mb-4">Visi</h3>
+                <p class="text-text-muted leading-relaxed">
+                    <%= settings.visi || 'Visi belum ditambahkan.' %>
+                </p>
+            </div>
+
+            <div class="card p-8">
+                <div
+                    class="w-14 h-14 rounded-xl bg-header flex items-center justify-center mb-6 shadow-lg shadow-blue-200">
+                    <i class="fas fa-bullseye text-white text-2xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-text mb-4">Misi</h3>
+                <ul class="text-text-muted space-y-3">
+                    <% if (settings.misi) { %>
+                        <% settings.misi.split('|').forEach(function(m) { %>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check-circle text-green-500 mt-1 flex-shrink-0"></i>
+                                <span>
+                                    <%= m.trim() %>
+                                </span>
+                            </li>
+                            <% }); %>
+                                <% } else { %>
+                                    <p class="italic text-center w-full">Misi belum ditambahkan.</p>
+                                    <% } %>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>

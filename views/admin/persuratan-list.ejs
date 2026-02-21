@@ -1,0 +1,46 @@
+<div class="flex items-center justify-between mb-6">
+    <h2 class="text-2xl font-bold"><span class="text-header">Persuratan</span></h2>
+    <a href="/admin/persuratan/tambah" class="btn-primary"><i class="fas fa-plus"></i> Tambah Surat</a>
+</div>
+<div class="card rounded-xl overflow-hidden">
+    <div class="overflow-x-auto">
+        <table class="w-full data-table">
+            <thead>
+                <tr>
+                    <th class="px-4 py-3 text-left">Tanggal</th>
+                    <th class="px-4 py-3 text-left">Asal Surat</th>
+                    <th class="px-4 py-3 text-left">Isi Surat</th>
+                    <th class="px-4 py-3 text-center">File</th>
+                    <th class="px-4 py-3 text-center">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (items.length> 0) { items.forEach(function(s) { %>
+                    <tr>
+                        <td class="px-4 py-3 text-sm text-text-muted">
+                            <%= s.tanggal ? new Date(s.tanggal).toLocaleDateString('id-ID') : '-' %>
+                        </td>
+                        <td class="px-4 py-3 font-medium text-text">
+                            <%= s.asal_surat %>
+                        </td>
+                        <td class="px-4 py-3 text-sm text-text-muted max-w-xs truncate">
+                            <%= (s.isi_surat || '' ).substring(0, 80) %>
+                        </td>
+                        <td class="px-4 py-3 text-center">
+                            <% if (s.upload_surat) { %><a href="/uploads/<%= s.upload_surat %>" target="_blank"
+                                    class="text-header"><i class="fas fa-download"></i></a>
+                                <% } else { %>-<% } %>
+                        </td>
+                        <td class="px-4 py-3 text-center"><a href="/admin/persuratan/<%= s.id %>/hapus"
+                                class="text-red-500 text-sm" onclick="return confirm('Hapus?')"><i
+                                    class="fas fa-trash"></i></a></td>
+                    </tr>
+                    <% }); } else { %>
+                        <tr>
+                            <td colspan="5" class="px-4 py-8 text-center text-text-muted">Belum ada data persuratan</td>
+                        </tr>
+                        <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>

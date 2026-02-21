@@ -1,0 +1,139 @@
+<div class="max-w-2xl mx-auto">
+    <a href="/admin/dashboard" class="text-text-muted hover:text-header text-sm mb-6 inline-flex items-center gap-1">
+        <i class="fas fa-arrow-left"></i> Kembali ke Dashboard
+    </a>
+
+    <div class="postcard p-8">
+        <div class="flex flex-col md:flex-row gap-8 items-center md:items-start">
+            <!-- Photo -->
+            <div class="flex-shrink-0">
+                <% if (member.foto) { %>
+                    <img src="/uploads/<%= member.foto %>"
+                        class="w-32 h-32 rounded-2xl object-cover border-2 border-border" alt="<%= member.nama %>">
+                    <% } else { %>
+                        <div
+                            class="w-32 h-32 rounded-2xl bg-blue-50 flex items-center justify-center border-2 border-border">
+                            <i class="fas fa-user text-header text-4xl"></i>
+                        </div>
+                        <% } %>
+            </div>
+
+            <!-- Info -->
+            <div class="flex-1 text-center md:text-left">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-header text-xs mb-3">
+                    <i class="fas fa-mortar-pestle"></i> PAFI Balikpapan
+                </div>
+                <h2 class="text-2xl font-bold text-text mb-4">
+                    <%= member.nama %>
+                </h2>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                    <div class="flex items-center gap-2 text-text-muted">
+                        <i class="fas fa-map-marker-alt text-header w-4"></i>
+                        <span>
+                            <%= member.tempat_lahir || '-' %>, <%= member.tanggal_lahir ? new
+                                    Date(member.tanggal_lahir).toLocaleDateString('id-ID',
+                                    {day:'numeric',month:'long',year:'numeric'}) : '-' %>
+                        </span>
+                    </div>
+                    <div class="flex items-center gap-2 text-text-muted">
+                        <i class="fas fa-barcode text-header w-4"></i>
+                        <span>KTAN: <strong class="text-text">
+                                <%= member.no_ktan || '-' %>
+                            </strong></span>
+                    </div>
+                    <div class="flex items-center gap-2 text-text-muted">
+                        <i class="fas fa-building text-header w-4"></i>
+                        <span>
+                            <%= member.tempat_bekerja || '-' %>
+                        </span>
+                    </div>
+                    <div class="flex items-center gap-2 text-text-muted">
+                        <i class="fas fa-credit-card text-header w-4"></i>
+                        <span>
+                            <%= member.jenis_kartu || '-' %>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="mt-4 pt-4 border-t border-border flex flex-wrap gap-2">
+                    <span
+                        class="px-3 py-1.5 rounded-full text-sm font-medium <%= member.iuran_status === 'Lunas' ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-yellow-50 text-yellow-700 border border-yellow-200' %>">
+                        <i class="fas <%= member.iuran_status === 'Lunas' ? 'fa-check-circle' : 'fa-clock' %> mr-1"></i>
+                        Iuran: <%= member.iuran_status %>
+                    </span>
+                    <span
+                        class="px-3 py-1.5 rounded-full text-sm font-medium <%= member.status_member === 'Aktif' ? 'bg-green-50 text-green-700 border border-green-200' : (member.status_member === 'Ditolak' ? 'bg-red-50 text-red-700 border border-red-200' : 'bg-gray-100 text-gray-700 border border-gray-200') %>">
+                        <i
+                            class="fas <%= member.status_member === 'Aktif' ? 'fa-user-check' : (member.status_member === 'Ditolak' ? 'fa-user-times' : 'fa-user-clock') %> mr-1"></i>
+                        Status: <%= member.status_member || 'Pending' %>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Details -->
+        <div class="mt-8 pt-6 border-t border-border grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+            <div><span class="text-text-muted">No. STR:</span> <span class="text-text ml-2">
+                    <%= member.no_str || '-' %>
+                </span></div>
+            <div><span class="text-text-muted">No. SIP:</span> <span class="text-text ml-2">
+                    <%= member.no_sip || '-' %>
+                </span></div>
+            <div><span class="text-text-muted">Masa Aktif SIP:</span> <span class="text-text ml-2">
+                    <%= member.masa_aktif_sip ? new Date(member.masa_aktif_sip).toLocaleDateString('id-ID') : '-' %>
+                </span></div>
+            <div><span class="text-text-muted">Golongan Darah:</span> <span class="text-red-500 font-semibold ml-2">
+                    <%= member.golongan_darah || '-' %>
+                </span></div>
+            <div><span class="text-text-muted">Kampus:</span> <span class="text-text ml-2">
+                    <%= member.kampus || '-' %> (<%= member.provinsi_kampus || '-' %>)
+                </span></div>
+            <div><span class="text-text-muted">Ijazah:</span> <span class="text-text ml-2">
+                    <%= member.ijazah_kefarmasian || '-' %>
+                </span></div>
+            <div><span class="text-text-muted">WhatsApp:</span> <span class="text-text ml-2">
+                    <%= member.no_whatsapp || '-' %>
+                </span></div>
+        </div>
+
+        <!-- Bukti Transfer Iuran -->
+        <div class="mt-6 pt-6 border-t border-border">
+            <h4 class="text-sm font-semibold text-text mb-3"><i class="fas fa-receipt text-header mr-1"></i> Bukti
+                Transfer Iuran</h4>
+            <% if (member.bukti_transfer) { %>
+                <a href="/uploads/<%= member.bukti_transfer %>" target="_blank" class="block">
+                    <img src="/uploads/<%= member.bukti_transfer %>"
+                        class="max-w-xs rounded-lg border border-border hover:shadow-lg transition"
+                        alt="Bukti Transfer">
+                </a>
+                <% } else { %>
+                    <p class="text-text-muted text-sm italic">Belum ada bukti transfer yang diupload</p>
+                    <% } %>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="mt-6 pt-6 border-t border-border flex flex-wrap gap-3">
+            <% if (!member.status_member || member.status_member==='Pending' ) { %>
+                <a href="/admin/members/<%= member.id %>/approve"
+                    class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition inline-flex items-center gap-2"><i
+                        class="fas fa-check"></i> Terima Anggota</a>
+                <a href="/admin/members/<%= member.id %>/reject"
+                    class="bg-red-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-red-600 transition inline-flex items-center gap-2"
+                    onclick="return confirm('Yakin menolak?')"><i class="fas fa-times"></i> Tolak</a>
+                <% } %>
+                    <a href="/admin/members/<%= member.id %>/edit"
+                        class="bg-yellow-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-yellow-600 transition inline-flex items-center gap-2"><i
+                            class="fas fa-edit"></i> Edit Data</a>
+                    <% if (member.iuran_status==='Belum Lunas' ) { %>
+                        <a href="/admin/members/<%= member.id %>/iuran-lunas"
+                            class="bg-header text-white px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition inline-flex items-center gap-2"><i
+                                class="fas fa-check-double"></i> Tandai Iuran Lunas</a>
+                        <% } else { %>
+                            <a href="/admin/members/<%= member.id %>/iuran-belum"
+                                class="bg-gray-400 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-500 transition inline-flex items-center gap-2"><i
+                                    class="fas fa-undo"></i> Tandai Belum Lunas</a>
+                            <% } %>
+        </div>
+    </div>
+</div>

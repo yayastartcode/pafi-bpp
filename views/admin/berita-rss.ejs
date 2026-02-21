@@ -1,0 +1,29 @@
+<h2 class="text-2xl font-bold mb-6">Berita <span class="text-header">Kefarmasian</span></h2>
+<p class="text-text-muted text-sm mb-6"><i class="fas fa-rss text-header mr-1"></i> Otomatis diambil dari sumber
+    terpercaya</p>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <% if (items.length> 0) { items.forEach(function(item) { %>
+        <div class="card rounded-xl p-5 card-hover">
+            <div class="flex items-center gap-2 text-xs text-text-muted mb-2">
+                <span class="px-2 py-0.5 rounded bg-blue-50 text-header">
+                    <%= item.source %>
+                </span>
+                <span>
+                    <%= item.date ? new Date(item.date).toLocaleDateString('id-ID') : '-' %>
+                </span>
+            </div>
+            <h3 class="font-medium text-text mb-2 line-clamp-2">
+                <%= item.title %>
+            </h3>
+            <a href="<%= item.link %>" target="_blank" class="text-header text-sm hover:underline">
+                Baca selengkapnya <i class="fas fa-external-link-alt ml-1"></i>
+            </a>
+        </div>
+        <% }); } else { %>
+            <div class="col-span-2 card rounded-xl p-8 text-center text-text-muted">
+                <i class="fas fa-rss text-3xl mb-3"></i>
+                <p>Tidak dapat memuat berita. Cek koneksi internet.</p>
+            </div>
+            <% } %>
+</div>

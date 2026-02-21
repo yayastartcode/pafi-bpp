@@ -1,0 +1,47 @@
+<div class="flex items-center justify-between mb-6">
+    <h2 class="text-2xl font-bold">Surat <span class="text-header">Rekomendasi</span></h2>
+    <a href="/admin/rekomendasi/tambah" class="btn-primary"><i class="fas fa-plus"></i> Buat Baru</a>
+</div>
+<div class="card rounded-xl overflow-hidden">
+    <div class="overflow-x-auto">
+        <table class="w-full data-table">
+            <thead>
+                <tr>
+                    <th class="px-4 py-3 text-left">Nama Anggota</th>
+                    <th class="px-4 py-3 text-left">No. KTAN</th>
+                    <th class="px-4 py-3 text-left">Keperluan</th>
+                    <th class="px-4 py-3 text-left">Tanggal</th>
+                    <th class="px-4 py-3 text-center">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (items.length> 0) { items.forEach(function(r) { %>
+                    <tr>
+                        <td class="px-4 py-3 font-medium text-text">
+                            <%= r.nama_anggota %>
+                        </td>
+                        <td class="px-4 py-3 text-sm text-text-muted">
+                            <%= r.no_ktan || '-' %>
+                        </td>
+                        <td class="px-4 py-3 text-sm text-text-muted max-w-xs truncate">
+                            <%= (r.keperluan || '' ).substring(0, 60) %>
+                        </td>
+                        <td class="px-4 py-3 text-sm text-text-muted">
+                            <%= r.created_at ? new Date(r.created_at).toLocaleDateString('id-ID') : '-' %>
+                        </td>
+                        <td class="px-4 py-3 text-center flex items-center justify-center gap-2">
+                            <a href="/admin/rekomendasi/<%= r.id %>" target="_blank" class="text-header text-sm"
+                                title="Cetak"><i class="fas fa-print"></i></a>
+                            <a href="/admin/rekomendasi/<%= r.id %>/hapus" class="text-red-500 text-sm"
+                                onclick="return confirm('Hapus?')"><i class="fas fa-trash"></i></a>
+                        </td>
+                    </tr>
+                    <% }); } else { %>
+                        <tr>
+                            <td colspan="5" class="px-4 py-8 text-center text-text-muted">Belum ada data</td>
+                        </tr>
+                        <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>

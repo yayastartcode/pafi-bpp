@@ -1,0 +1,23 @@
+<div class="max-w-3xl mx-auto">
+    <a href="/admin/skp" class="text-text-muted hover:text-header text-sm mb-6 inline-flex items-center gap-1"><i
+            class="fas fa-arrow-left"></i> Kembali</a>
+    <h2 class="text-2xl font-bold mb-6">Tambah <span class="text-header">Info SKP</span></h2>
+    <form method="POST" action="/admin/skp/tambah" class="card rounded-2xl p-8 space-y-5">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <label class="block text-sm font-medium text-text mb-2">Judul</label>
+                <input type="text" name="judul" class="form-input" placeholder="Judul info SKP" required>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-text mb-2">Tanggal</label>
+                <input type="date" name="tanggal" class="form-input" required>
+            </div>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-text mb-2">Konten (Pengabdian, Pembelajaran,
+                Pekerjaan)</label>
+            <textarea name="konten" class="richtext form-input" rows="10"></textarea>
+        </div>
+        <button type="submit" class="btn-primary w-full justify-center py-3"><i class="fas fa-save"></i> Simpan</button>
+    </form>
+</div>

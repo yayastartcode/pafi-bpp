@@ -1,0 +1,147 @@
+<!-- Stats -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+    <div class="stat-card p-5">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm text-text-muted">Total Anggota</p>
+                <p class="text-3xl font-bold text-text mt-1">
+                    <%= stats.total %>
+                </p>
+            </div>
+            <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center">
+                <i class="fas fa-users text-header text-xl"></i>
+            </div>
+        </div>
+    </div>
+    <div class="stat-card p-5">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm text-text-muted">Iuran Lunas</p>
+                <p class="text-3xl font-bold text-green-600 mt-1">
+                    <%= stats.lunas %>
+                </p>
+            </div>
+            <div class="w-12 h-12 rounded-xl bg-green-50 flex items-center justify-center">
+                <i class="fas fa-check-circle text-green-600 text-xl"></i>
+            </div>
+        </div>
+    </div>
+    <div class="stat-card p-5">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm text-text-muted">Belum Lunas</p>
+                <p class="text-3xl font-bold text-warning mt-1">
+                    <%= stats.belumLunas %>
+                </p>
+            </div>
+            <div class="w-12 h-12 rounded-xl bg-yellow-50 flex items-center justify-center">
+                <i class="fas fa-clock text-warning text-xl"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Search -->
+<div class="card p-4 mb-6">
+    <form method="GET" action="/admin/dashboard" class="flex gap-3">
+        <div class="relative flex-1">
+            <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-text-muted"></i>
+            <input type="text" name="search" value="<%= search %>" class="form-input !pl-11"
+                placeholder="Cari nama, No. KTAN, tempat bekerja...">
+        </div>
+        <button type="submit" class="btn-primary">Cari</button>
+        <% if (search) { %><a href="/admin/dashboard" class="btn-secondary">Reset</a>
+            <% } %>
+    </form>
+</div>
+
+<!-- Table -->
+<div class="card overflow-hidden">
+    <div class="overflow-x-auto">
+        <table class="w-full data-table">
+            <thead>
+                <tr>
+                    <th class="px-4 py-3 text-left">Nama</th>
+                    <th class="px-4 py-3 text-left">Tempat Bekerja</th>
+                    <th class="px-4 py-3 text-left">No. KTAN</th>
+                    <th class="px-4 py-3 text-left">Kategori</th>
+                    <th class="px-4 py-3 text-left">Status</th>
+                    <th class="px-4 py-3 text-center">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (members.length> 0) { %>
+                    <% members.forEach(function(m) { %>
+                        <tr>
+                            <td class="px-4 py-3">
+                                <div class="flex items-center gap-3">
+                                    <% if (m.foto) { %>
+                                        <img src="/uploads/<%= m.foto %>" class="w-8 h-8 rounded-full object-cover"
+                                            alt="">
+                                        <% } else { %>
+                                            <div
+                                                class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center">
+                                                <i class="fas fa-user text-header text-xs"></i>
+                                            </div>
+                                            <% } %>
+                                                <span class="font-medium text-text">
+                                                    <%= m.nama %>
+                                                </span>
+                                </div>
+                            </td>
+                            <td class="px-4 py-3 text-sm text-text-muted">
+                                <%= m.tempat_bekerja || '-' %>
+                            </td>
+                            <td class="px-4 py-3 text-sm text-text-muted">
+                                <%= m.no_ktan || '-' %>
+                            </td>
+                            <td class="px-4 py-3 text-sm text-text-muted">
+                                <%= m.kategori_tempat_bekerja || '-' %>
+                            </td>
+                            <td class="px-4 py-3">
+                                <span
+                                    class="px-2 py-1 rounded-full text-xs font-medium <%= m.iuran_status === 'Lunas' ? 'bg-green-50 text-green-700' : 'bg-yellow-50 text-yellow-700' %>">
+                                    <%= m.iuran_status %>
+                                </span>
+                            </td>
+                            <td class="px-4 py-3">
+                                <span
+                                    class="px-2 py-1 rounded-full text-xs font-medium <%= m.status_member === 'Aktif' ? 'bg-green-50 text-green-700' : (m.status_member === 'Ditolak' ? 'bg-red-50 text-red-700' : 'bg-gray-100 text-gray-700') %>">
+                                    <%= m.status_member || 'Pending' %>
+                                </span>
+                            </td>
+                            <td class="px-4 py-3 text-center">
+                                <div class="flex items-center justify-center gap-2">
+                                    <% if (!m.status_member || m.status_member==='Pending' ) { %>
+                                        <a href="/admin/members/<%= m.id %>/approve"
+                                            class="text-green-600 hover:text-green-700 text-sm" title="Terima"><i
+                                                class="fas fa-check"></i></a>
+                                        <a href="/admin/members/<%= m.id %>/reject"
+                                            class="text-red-500 hover:text-red-600 text-sm border-r border-border pr-2"
+                                            title="Tolak" onclick="return confirm('Yakin menolak pendaftaran ini?')"><i
+                                                class="fas fa-times"></i></a>
+                                        <% } %>
+                                            <a href="/admin/members/<%= m.id %>"
+                                                class="text-header hover:text-primary-dark text-sm ml-1"
+                                                title="Detail/Postcard"><i class="fas fa-id-card"></i></a>
+                                            <a href="/admin/members/<%= m.id %>/edit"
+                                                class="text-yellow-600 hover:text-yellow-700 text-sm" title="Edit"><i
+                                                    class="fas fa-edit"></i></a>
+                                            <a href="/admin/members/<%= m.id %>/delete"
+                                                class="text-red-500 hover:text-red-600 text-sm" title="Hapus"
+                                                onclick="return confirm('Yakin hapus data ini?')"><i
+                                                    class="fas fa-trash"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                        <% }); %>
+                            <% } else { %>
+                                <tr>
+                                    <td colspan="6" class="px-4 py-8 text-center text-text-muted">Tidak ada data anggota
+                                    </td>
+                                </tr>
+                                <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>

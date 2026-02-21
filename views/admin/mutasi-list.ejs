@@ -1,0 +1,82 @@
+<div class="flex items-center justify-between mb-6">
+    <h2 class="text-2xl font-bold">Data <span class="text-header">Mutasi Anggota</span></h2>
+    <a href="/admin/mutasi/tambah" class="btn-primary"><i class="fas fa-plus"></i> Tambah</a>
+</div>
+
+<!-- Stats -->
+<div class="grid grid-cols-2 gap-4 mb-6">
+    <div class="stat-card p-4">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center">
+                <i class="fas fa-arrow-down text-green-600"></i>
+            </div>
+            <div>
+                <p class="text-2xl font-bold text-green-600">
+                    <%= masuk %>
+                </p>
+                <p class="text-xs text-text-muted">Anggota Masuk</p>
+            </div>
+        </div>
+    </div>
+    <div class="stat-card p-4">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center">
+                <i class="fas fa-arrow-up text-red-600"></i>
+            </div>
+            <div>
+                <p class="text-2xl font-bold text-red-600">
+                    <%= keluar %>
+                </p>
+                <p class="text-xs text-text-muted">Anggota Keluar</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card rounded-xl overflow-hidden">
+    <div class="overflow-x-auto">
+        <table class="w-full data-table">
+            <thead>
+                <tr>
+                    <th class="px-4 py-3 text-left">Tanggal</th>
+                    <th class="px-4 py-3 text-left">Nama Anggota</th>
+                    <th class="px-4 py-3 text-left">Daerah Asal</th>
+                    <th class="px-4 py-3 text-left">Tujuan</th>
+                    <th class="px-4 py-3 text-center">Tipe</th>
+                    <th class="px-4 py-3 text-center">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (items.length> 0) { items.forEach(function(m) { %>
+                    <tr>
+                        <td class="px-4 py-3 text-sm text-text-muted">
+                            <%= m.tanggal ? new Date(m.tanggal).toLocaleDateString('id-ID') : '-' %>
+                        </td>
+                        <td class="px-4 py-3 font-medium text-text">
+                            <%= m.nama_anggota %>
+                        </td>
+                        <td class="px-4 py-3 text-sm text-text-muted">
+                            <%= m.daerah_asal || '-' %>
+                        </td>
+                        <td class="px-4 py-3 text-sm text-text-muted">
+                            <%= m.tujuan || '-' %>
+                        </td>
+                        <td class="px-4 py-3 text-center">
+                            <span
+                                class="px-2 py-1 rounded-full text-xs font-medium <%= m.tipe === 'Masuk' ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-500' %>">
+                                <%= m.tipe %>
+                            </span>
+                        </td>
+                        <td class="px-4 py-3 text-center"><a href="/admin/mutasi/<%= m.id %>/hapus"
+                                class="text-red-500 text-sm" onclick="return confirm('Hapus?')"><i
+                                    class="fas fa-trash"></i></a></td>
+                    </tr>
+                    <% }); } else { %>
+                        <tr>
+                            <td colspan="6" class="px-4 py-8 text-center text-text-muted">Belum ada data mutasi</td>
+                        </tr>
+                        <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+<div class="flex items-center justify-between mb-6">
+    <h2 class="text-2xl font-bold">Berita <span class="text-header">Lainnya</span></h2>
+    <a href="/admin/berita/tambah" class="btn-primary"><i class="fas fa-plus"></i> Tambah</a>
+</div>
+<div class="card rounded-xl overflow-hidden">
+    <div class="overflow-x-auto">
+        <table class="w-full data-table">
+            <thead>
+                <tr>
+                    <th class="px-4 py-3 text-left">Tanggal</th>
+                    <th class="px-4 py-3 text-left">Judul</th>
+                    <th class="px-4 py-3 text-center">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (items.length> 0) { items.forEach(function(b) { %>
+                    <tr>
+                        <td class="px-4 py-3 text-sm text-text-muted">
+                            <%= b.tanggal ? new Date(b.tanggal).toLocaleDateString('id-ID') : '-' %>
+                        </td>
+                        <td class="px-4 py-3 font-medium text-text">
+                            <%= b.judul %>
+                        </td>
+                        <td class="px-4 py-3 text-center"><a href="/admin/berita/<%= b.id %>/hapus"
+                                class="text-red-500 text-sm" onclick="return confirm('Hapus?')"><i
+                                    class="fas fa-trash"></i></a></td>
+                    </tr>
+                    <% }); } else { %>
+                        <tr>
+                            <td colspan="3" class="px-4 py-8 text-center text-text-muted">Belum ada data</td>
+                        </tr>
+                        <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>

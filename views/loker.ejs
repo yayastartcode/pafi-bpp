@@ -1,0 +1,35 @@
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="text-center mb-12">
+        <h1 class="text-3xl md:text-4xl font-bold mb-3">Lowongan <span class="text-indigo-600">Pekerjaan</span></h1>
+        <p class="text-text-muted">Informasi karir dan lowongan pekerjaan terbaru</p>
+    </div>
+
+    <div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <% if (lowongan.length> 0) { lowongan.forEach(function(l) { %>
+                <div class="card rounded-2xl p-6 card-hover border-t-4 border-t-indigo-600">
+                    <div class="text-xs text-text-muted mb-3 flex items-center gap-2">
+                        <i class="fas fa-calendar-alt"></i>
+                        <%= l.tanggal ? new Date(l.tanggal).toLocaleDateString('id-ID',
+                            {day:'numeric',month:'long',year:'numeric'}) : '-' %>
+                    </div>
+                    <p class="font-bold text-lg text-text mb-4">
+                        <%= l.asal_sumber %>
+                    </p>
+                    <% if (l.upload_file) { %>
+                        <div class="mt-4 pt-4 border-t border-border">
+                            <a href="/uploads/<%= l.upload_file %>" target="_blank"
+                                class="btn-primary w-full justify-center flex items-center gap-2"><i
+                                    class="fas fa-download"></i> Unduh Lampiran</a>
+                        </div>
+                        <% } %>
+                </div>
+                <% }); } else { %>
+                    <div class="col-span-1 md:col-span-2 lg:col-span-3 text-center py-16 card">
+                        <i class="fas fa-briefcase text-4xl text-gray-300 mb-4"></i>
+                        <p class="text-text-muted text-lg">Belum ada lowongan pekerjaan saat ini.</p>
+                    </div>
+                    <% } %>
+        </div>
+    </div>
+</section>

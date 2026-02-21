@@ -1,0 +1,28 @@
+<section class="bg-header py-16 text-white text-center">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 class="text-4xl font-bold mb-4">Struktur <span class="text-blue-200">Organisasi</span></h1>
+        <p class="text-blue-100 text-lg">Susunan Kepengurusan PAFI Cabang Balikpapan</p>
+    </div>
+</section>
+
+<section class="py-16 bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <% if (settings.struktur_org_img) { %>
+            <div class="card p-4 md:p-8 inline-block shadow-lg mx-auto bg-gray-50 border-gray-200 rounded-2xl w-full">
+                <img src="/uploads/<%= settings.struktur_org_img %>" alt="Bagan Struktur Organisasi"
+                    class="mx-auto rounded-lg max-w-full h-auto object-contain">
+            </div>
+            <div class="mt-8 text-text-muted">
+                <a href="/uploads/<%= settings.struktur_org_img %>" target="_blank"
+                    class="btn-primary hover:bg-header transition-colors inline-flex items-center gap-2"><i
+                        class="fas fa-search-plus"></i> Lihat Ukuran Penuh</a>
+            </div>
+            <% } else { %>
+                <div class="card p-16 text-text-muted border-dashed border-2">
+                    <i class="fas fa-sitemap text-6xl text-gray-300 mb-6"></i>
+                    <h3 class="text-2xl font-bold mb-2">Bagan Struktur Belum Tersedia</h3>
+                    <p>Pengurus belum mengunggah gambar bagan struktur organisasi.</p>
+                </div>
+                <% } %>
+    </div>
+</section>

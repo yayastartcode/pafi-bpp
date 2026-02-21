@@ -1,0 +1,42 @@
+<div class="flex items-center justify-between mb-6">
+    <h2 class="text-2xl font-bold">Lowongan <span class="text-header">Pekerjaan</span></h2>
+    <a href="/admin/lowongan/tambah" class="btn-primary"><i class="fas fa-plus"></i> Tambah</a>
+</div>
+<div class="card rounded-xl overflow-hidden">
+    <div class="overflow-x-auto">
+        <table class="w-full data-table">
+            <thead>
+                <tr>
+                    <th class="px-4 py-3 text-left">Tanggal</th>
+                    <th class="px-4 py-3 text-left">Asal Sumber</th>
+                    <th class="px-4 py-3 text-center">File</th>
+                    <th class="px-4 py-3 text-center">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (items.length> 0) { items.forEach(function(l) { %>
+                    <tr>
+                        <td class="px-4 py-3 text-sm text-text-muted">
+                            <%= l.tanggal ? new Date(l.tanggal).toLocaleDateString('id-ID') : '-' %>
+                        </td>
+                        <td class="px-4 py-3 font-medium text-text">
+                            <%= l.asal_sumber || '-' %>
+                        </td>
+                        <td class="px-4 py-3 text-center">
+                            <% if (l.upload_file) { %><a href="/uploads/<%= l.upload_file %>" target="_blank"
+                                    class="text-header"><i class="fas fa-download"></i></a>
+                                <% } else { %>-<% } %>
+                        </td>
+                        <td class="px-4 py-3 text-center"><a href="/admin/lowongan/<%= l.id %>/hapus"
+                                class="text-red-500 text-sm" onclick="return confirm('Hapus?')"><i
+                                    class="fas fa-trash"></i></a></td>
+                    </tr>
+                    <% }); } else { %>
+                        <tr>
+                            <td colspan="4" class="px-4 py-8 text-center text-text-muted">Belum ada data</td>
+                        </tr>
+                        <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>

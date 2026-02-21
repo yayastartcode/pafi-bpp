@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Surat Rekomendasi - PAFI Balikpapan</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            padding: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+            color: #1a1a1a;
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #0ea5e9;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            color: #0ea5e9;
+            margin-bottom: 4px;
+        }
+
+        .header p {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: 700;
+            text-decoration: underline;
+            margin-bottom: 30px;
+        }
+
+        .content {
+            line-height: 1.8;
+            font-size: 14px;
+        }
+
+        .content p {
+            margin-bottom: 12px;
+        }
+
+        .data-row {
+            display: flex;
+            margin-bottom: 6px;
+        }
+
+        .data-label {
+            width: 180px;
+            font-weight: 600;
+        }
+
+        .data-value {
+            flex: 1;
+        }
+
+        .footer {
+            margin-top: 60px;
+            text-align: right;
+        }
+
+        .footer .date {
+            margin-bottom: 80px;
+            font-size: 14px;
+        }
+
+        .footer .sign {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .no-print {
+            margin-bottom: 20px;
+        }
+
+        @media print {
+            .no-print {
+                display: none;
+            }
+
+            body {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="no-print">
+        <button onclick="window.print()"
+            style="background:#0ea5e9;color:#fff;padding:10px 24px;border:none;border-radius:8px;cursor:pointer;font-weight:600;">
+            🖨️ Cetak Surat
+        </button>
+        <a href="/admin/rekomendasi" style="margin-left:12px;color:#0ea5e9;text-decoration:none;">← Kembali</a>
+    </div>
+
+    <div class="header">
+        <h1>PERSATUAN AHLI FARMASI INDONESIA</h1>
+        <h1>CABANG BALIKPAPAN</h1>
+        <p>Kalimantan Timur</p>
+    </div>
+
+    <div class="title">SURAT REKOMENDASI</div>
+
+    <div class="content">
+        <p>Yang bertanda tangan di bawah ini, Pengurus PAFI Cabang Balikpapan, menerangkan bahwa:</p>
+
+        <div style="margin: 20px 0 20px 40px;">
+            <div class="data-row">
+                <span class="data-label">Nama</span>
+                <span class="data-value">: <%= item.nama_anggota %></span>
+            </div>
+            <div class="data-row">
+                <span class="data-label">Tempat, Tanggal Lahir</span>
+                <span class="data-value">: <%= item.tempat_lahir || '-' %>, <%= item.tanggal_lahir ? new
+                            Date(item.tanggal_lahir).toLocaleDateString('id-ID',
+                            {day:'numeric',month:'long',year:'numeric'}) : '-' %></span>
+            </div>
+            <div class="data-row">
+                <span class="data-label">No. KTAN</span>
+                <span class="data-value">: <%= item.no_ktan || '-' %></span>
+            </div>
+            <div class="data-row">
+                <span class="data-label">Alamat</span>
+                <span class="data-value">: <%= item.alamat || '-' %></span>
+            </div>
+        </div>
+
+        <p>Adalah benar anggota PAFI Cabang Balikpapan yang bersangkutan.</p>
+        <p><strong>Keperluan:</strong>
+            <%= item.keperluan %>
+        </p>
+        <p>Demikian surat rekomendasi ini dibuat untuk dipergunakan sebagaimana mestinya.</p>
+    </div>
+
+    <div class="footer">
+        <div class="date">Balikpapan, <%= new Date().toLocaleDateString('id-ID',
+                {day:'numeric',month:'long',year:'numeric'}) %>
+        </div>
+        <div class="sign">
+            Ketua PAFI Cabang Balikpapan<br><br><br><br>
+            _________________________
+        </div>
+    </div>
+</body>
+
+</html>

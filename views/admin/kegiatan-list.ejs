@@ -1,0 +1,54 @@
+<div class="flex items-center justify-between mb-6">
+    <h2 class="text-2xl font-bold">Kegiatan <span class="text-header">Terealisasi</span></h2>
+    <a href="/admin/kegiatan-realisasi/tambah" class="btn-primary"><i class="fas fa-plus"></i> Tambah</a>
+</div>
+<div class="card rounded-xl overflow-hidden">
+    <div class="overflow-x-auto">
+        <table class="w-full data-table">
+            <thead>
+                <tr>
+                    <th class="px-4 py-3 text-left">Tanggal</th>
+                    <th class="px-4 py-3 text-left">Nama Kegiatan</th>
+                    <th class="px-4 py-3 text-left">Ketua Panitia</th>
+                    <th class="px-4 py-3 text-center">Peserta</th>
+                    <th class="px-4 py-3 text-center">Foto</th>
+                    <th class="px-4 py-3 text-center">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (items.length> 0) { items.forEach(function(k) { %>
+                    <tr>
+                        <td class="px-4 py-3 text-sm text-text-muted">
+                            <%= k.tanggal ? new Date(k.tanggal).toLocaleDateString('id-ID') : '-' %>
+                        </td>
+                        <td class="px-4 py-3 font-medium text-text">
+                            <%= k.nama_kegiatan %>
+                        </td>
+                        <td class="px-4 py-3 text-sm text-text-muted">
+                            <%= k.ketua_panitia || '-' %>
+                        </td>
+                        <td class="px-4 py-3 text-center text-sm text-text-muted">
+                            <%= k.jumlah_peserta || '-' %>
+                        </td>
+                        <td class="px-4 py-3 text-center">
+                            <div class="flex items-center justify-center gap-1">
+                                <% [k.foto1,k.foto2,k.foto3,k.foto4,k.foto5].filter(Boolean).forEach(function(f) { %>
+                                    <img src="/uploads/<%= f %>" class="w-8 h-8 rounded object-cover" alt="">
+                                    <% }); %>
+                            </div>
+                        </td>
+                        <td class="px-4 py-3 text-center">
+                            <a href="/admin/kegiatan-realisasi/<%= k.id %>/hapus"
+                                class="text-red-500 hover:text-red-600 text-sm"
+                                onclick="return confirm('Hapus data ini?')"><i class="fas fa-trash"></i></a>
+                        </td>
+                    </tr>
+                    <% }); } else { %>
+                        <tr>
+                            <td colspan="6" class="px-4 py-8 text-center text-text-muted">Belum ada data</td>
+                        </tr>
+                        <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>
